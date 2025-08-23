@@ -27,6 +27,7 @@ return array;
           elem.textContent="🌙"
         }
        }
+       const dots = document.getElementById("dots")
         const results = document.getElementById("results");
         const submitBtn = document.getElementById("submit-btn");
         let score = 0;
@@ -46,6 +47,7 @@ if(currentSetNumber>4){
 }
 let currentSet = allSets[currentSetNumber];
 function addToContainer(array){
+  dots.innerHTML="";
    questionsContainer.innerHTML="";
         for(let i=0;i<array.length;i++){
      questionsContainer.innerHTML+=`
@@ -57,8 +59,24 @@ function addToContainer(array){
                 <button type="button" class="question-${i}-choice" id="question-${i}-choice-C" onclick="giveAnswer(this)">${array[i].options[2]}</button>
                 <button type="button" class="question-${i}-choice" id="question-${i}-choice-D" onclick="giveAnswer(this)">${array[i].options[3]}</button>
             </div>
+     `;
+ dots.innerHTML+=`
+    <span id="dot-${i}" class="dot" onclick="scrollToDiv(this)"><span>
      `
         }
+        const observer = new IntersectionObserver((entries)=>{ 
+        entries.forEach((entry)=>{
+          let index = get1sClassName(entry.target.id);
+        if(entry.isIntersecting){
+        document.getElementById(`dot-${index}`).classList.add('show')
+         }
+         else{
+           document.getElementById(`dot-${index}`).classList.remove('show')
+         }
+       })
+       },{})
+      const cards = document.querySelectorAll('.question');
+       cards.forEach(el => observer.observe(el));
       }
 
       function startTest(){
@@ -69,6 +87,7 @@ function addToContainer(array){
         submitBtn.style.display="block"
         submitBtn.setAttribute("disabled",true)
         addToContainer(shuffle(currentSet));
+
       }
       function goHome(){
         score = 0;
@@ -88,6 +107,8 @@ function addToContainer(array){
         let currentQuestion = currentSet[index];
         currentQuestion.userAnswer=elem.id.match(/[A-D]/g).join("");
         checkAllAnswered();
+        document.getElementById(`dot-${index}`).classList.add("answered")
+
       }
       function submitTest(elem){
     for(let i=0;i<currentSet.length;i++){
@@ -119,3 +140,14 @@ function addToContainer(array){
              submitBtn.removeAttribute("disabled")
         }
       }
+   function scrollToDiv(elem){
+     let index = get1sClassName(elem.id);
+const targetElement = questionsContainer.children[index];
+if (targetElement) {
+  targetElement.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'      
+  });
+}
+   }
+       

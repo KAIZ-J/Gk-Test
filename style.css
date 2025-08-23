@@ -99,6 +99,30 @@ body.dark {
      position-area: left bottom;
      translate: 70%;
        }
+       #dots{
+            display: flex;
+            justify-content: center;
+            gap: .5em;
+            position: fixed;
+            position-anchor: --container;
+            position-area: bottom;
+            transform: translateY(15px);
+        }
+        #dots span{
+            background-color: rgb(156, 152, 152);
+            height: .7em;
+            width: .7em;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: scale .05s ease;
+            
+        }
+        #dots span.show{
+         scale: 1.4;
+        }
+         #dots span.answered{
+          background-color: var(--accent);
+        }
        progress{
         padding: 50px;
         anchor-name: --progress;
@@ -133,6 +157,10 @@ body.dark {
        }
        #submit-btn{
         display: none;
+         position: fixed;
+            position-anchor: --container;
+            position-area: bottom;
+            transform: translateY(40px);
        }
        #theme{
         cursor: pointer;
