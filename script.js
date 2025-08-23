@@ -116,11 +116,14 @@ function addToContainer(array){
         let correctAnswer =  document.getElementById(`question-${i}-choice-${currentSet[i].answer}`)
         correctAnswer.style.backgroundColor="green";
         correctAnswer.style.color="white";
+        document.getElementById(`dot-${i}`).classList.remove("answered")
       if(currentSet[i].answer===currentSet[i].userAnswer){
        score++;
+       document.getElementById(`dot-${i}`).style.backgroundColor="green";
       }
       else{
     document.getElementById(`question-${i}-choice-${currentSet[i].userAnswer}`).style.backgroundColor="red";
+    document.getElementById(`dot-${i}`).style.backgroundColor="red";
       }
     }
     currentSetNumber+=1;
