@@ -58,7 +58,7 @@ body.dark {
         color: white;
        }
         #questions-container{
-            width: 300px;
+            width: 320px;
             overflow-x: scroll;
             display: none;
             gap: 20px;
@@ -69,7 +69,7 @@ body.dark {
         }
         #questions-container .question{
             scroll-snap-align: start;
-           height: 300px;
+           height: 320px;
             width: 100%;
             align-content: center;
             text-align: center;
@@ -77,8 +77,11 @@ body.dark {
             background-color: var(--primary);
             border-radius: 10px;
             color: rgb(194, 194, 210);
-            overflow-y: auto;
+            overflow-y: scroll;
         }
+         #questions-container .question::-webkit-scrollbar{
+          display: none;
+         }
          #questions-container::scroll-button(right),#questions-container::scroll-button(left){
      content: '';
      background-color: var(--accent);
