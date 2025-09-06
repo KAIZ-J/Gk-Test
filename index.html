@@ -7,6 +7,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Kablammo|Sour Gummy|Atma|Poppins|Montserrat"
     />
+     <script src='https://kit.fontawesome.com/9603c04a31.js' crossorigin='anonymous'></script>
     <title>GK test</title>
     <link rel="stylesheet" href="style.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -17,20 +18,25 @@
   <body class="dark">
     <div id="home">
       <h1>
-       <span title="Version 1.01">GK Test</span>  <span onclick="changeTheme(this)" id="theme">☀️</span>
+       <span title="Version 2.00">Gk Test</span>  <span onclick="changeTheme(this)" id="theme">☀️</span>
       </h1>
-      <p id="set-text">Set 1/5</p>
-      <button type="button" id="start" onclick="startTest()">Start Test</button>
+      <button type="button" id="startGame" class="start" onclick="startTest()">Start Test</button>
     </div>
     <div id="questions-container">
       
     </div> <br>
-    <button type="button" id="submit-btn"  onclick="submitTest(this)" disabled title="You must answer 'All' questions to submit the test">Submit Test</button>
-    <div id="results">
-    </div>
+    <button type="button" id="submit-btn"  onclick="submitTest(this)" disabled title="You must answer 'All' questions to submit the test"><i class="fa-solid fa-paper-plane"></i><span>Submit Test</span></button>
+    <button type="button" id="back-to" onclick="openDialog()"><i class="fa-solid fa-left-long"></i> <span>Go Back</span></button>
     <div id="dots">
    
 </div>
+ <div id="dialog-outer">
+  <div id="dialog-inner">
+    </div>
+ </div>
+ <dialog id="load-msg">
+  <p id="load">Generating Questions</p>
+ </dialog>
     <script src="script.js">
       
     </script>

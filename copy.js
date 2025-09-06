@@ -15,9 +15,6 @@ array[randomArray[i]]=term;
 }
 return array;
        }
-       function cleanStr(str){
-        return str.match(/[a-zA-Z0-9]/gi).join("")
-       }
        function changeTheme(elem){
         document.body.classList.toggle("dark");
         if(document.body.className==="dark"){
@@ -27,11 +24,9 @@ return array;
           elem.textContent="🌙"
         }
        }
-       const backTo = document.getElementById("back-to")
-       const resultComments=["Get out of here,NOW🫵","Your such a failure😭","You didn't even try🥲","Could have been worse🙃","no comment😑","meh,halfway🥱","i mean you tried,right?😅","could have been better😒","nice~just nice😉","vola-cool😎","fiesta,Super🤩✨"]
-       const dots = document.getElementById("dots");
-       const loadMsg =  document.getElementById("load-msg")
-        const results = document.getElementById("dialog-inner");
+       const resultComments=["Get out of here,NOW🫵","Your such a failure😭","You didn't even try🥲","Could have been lower🙃","no comment😑","meh🥱","i mean you tried,right?😅","could have been better😒","nice~just nice😉","vola-cool😎","fiesta,Super🤩✨"]
+       const dots = document.getElementById("dots")
+        const results = document.getElementById("dialog");
         const submitBtn = document.getElementById("submit-btn");
         let score = 0;
         const home = document.getElementById("home");
@@ -42,7 +37,7 @@ function choicesFx(obj){
   let num = obj.id; 
 let str = "";
 shuffle([obj.correctAnswer,obj.incorrectAnswers[0],obj.incorrectAnswers[1],obj.incorrectAnswers[2]]).forEach(el=>{
-  str+=`<button type="button" class="question-${num}-choice" id="question-${num}-choice-${cleanStr(el)}" onclick="giveAnswer(this)">${el}</button>`;
+  str+=`<button type="button" class="question-${num}-choice" id="question-${num}-choice-${el}" onclick="giveAnswer(this)">${el}</button>`;
 })
 return str;
 }
@@ -78,31 +73,22 @@ function addToContainer(array){
 
      async function startTest(){
         try{
-           loadMsg.showModal();
                 let response = await fetch('https://the-trivia-api.com/v2/questions')
     let data = await response.json();
-     loadMsg.close();
     currentSet=data;
      currentSet.forEach(el=>el["userAnswer"]="");
      console.log(currentSet);
       score = 0;
-     
-      results.style.scale="0";
-setTimeout(()=>{
-   document.getElementById("dialog-outer").style.display="none";
-},100)
- dots.style.display="flex"
-        home.style.display="none";
-        backTo.style.display="none"
+        results.style.display="none"
+        home.style.display="none"
         questionsContainer.style.display="flex";
-        submitBtn.style.display="flex";
+        submitBtn.style.display="block"
         submitBtn.setAttribute("disabled",true)
         addToContainer(currentSet);
            }
            catch(err){
             console.log("coudn't fetch");
-            loadMsg.innerHTML=`<span>coudn't generate questions</span>
-              <button type="button" id="tryAgain" class="start" onclick="startTest()">Try Again</button>`
+            alert("Please Try Again")
            }
        
 
@@ -122,7 +108,7 @@ setTimeout(()=>{
       function submitTest(elem){
     for(let i=0;i<currentSet.length;i++){
          [...document.querySelectorAll(`.question-${currentSet[i].id}-choice`)].forEach(el=>el.setAttribute("disabled",true)) 
-        let correctAnswer =  document.getElementById(`question-${currentSet[i].id}-choice-${cleanStr(currentSet[i].correctAnswer)}`)
+        let correctAnswer =  document.getElementById(`question-${currentSet[i].id}-choice-${currentSet[i].correctAnswer}`)
         correctAnswer.style.backgroundColor="green";
         correctAnswer.style.color="white";
         document.getElementById(`dot-${currentSet[i].id}`).classList.remove("answered")
@@ -131,21 +117,20 @@ setTimeout(()=>{
        document.getElementById(`dot-${currentSet[i].id}`).style.backgroundColor="green";
       }
       else{
-    document.getElementById(`question-${currentSet[i].id}-choice-${cleanStr(currentSet[i].userAnswer)}`).style.backgroundColor="red";
+    document.getElementById(`question-${currentSet[i].id}-choice-${currentSet[i].userAnswer}`).style.backgroundColor="red";
     document.getElementById(`dot-${currentSet[i].id}`).style.backgroundColor="red";
       }
     }
-    backTo.style.display="block"
     document.getElementById("dialog-outer").style.display="flex";
-setTimeout(()=>{
-  results.style.scale="1";
-},100)
-    results.innerHTML=`<span style="font-size:1.3rem">${resultComments[score]}</span>
+       
+    results.innerHTML=`<span>${resultComments[score]}</span>
     <progress max="${currentSet.length}" value="${score}"></progress>
       <p id="text-over" style="color:${score>6?"white":"black"}">${score}/${currentSet.length}</p>
-      <button type="button" id="startAgain" class="start" onclick="startTest()"><i class="fa-solid fa-repeat"></i> <span>Play Again</span></button>
-      <span id="close" onclick="closeDialog()">X</span>`;
+      <button type="button" id="startAgain" onclick="startTest()"">Play Again</button>`;
       elem.style.display="none";
+       setTimeout(()=>{
+results.classList.add("active");
+        },100)
       }
       function checkAllAnswered(){
          if(currentSet.every(el=>el.userAnswer!=="")){
@@ -162,16 +147,4 @@ if (targetElement) {
   });
 }
    }
-       function closeDialog(){
-results.style.scale="0";
-setTimeout(()=>{
-   document.getElementById("dialog-outer").style.display="none";
-},100);
-       }
-       function openDialog(){
-         document.getElementById("dialog-outer").style.display="flex";
-setTimeout(()=>{
-  results.style.scale="1";
-},100)
-       }
-          
+       
