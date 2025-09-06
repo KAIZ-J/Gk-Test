@@ -67,6 +67,7 @@ body.dark {
             scroll-behavior: smooth;
             anchor-name: --container;
         }
+       
         #questions-container .question{
             scroll-snap-align: start;
            height: 320px;
@@ -78,6 +79,24 @@ body.dark {
             border-radius: 10px;
             color: rgb(194, 194, 210);
             overflow-y: scroll;
+            text-wrap: balance;
+        }
+         @media (min-width:768px) {
+          #questions-container{
+            height: 70%;
+            width: 70%;
+            margin-top: -50px;
+          }
+          .choices-container{
+            height: 60%;
+          }
+           .choices-container button{
+            width: 90%;
+            height: 20%;
+           }
+           #questions-container .question{
+            height:100%;
+           }
         }
          #questions-container .question::-webkit-scrollbar{
           display: none;
