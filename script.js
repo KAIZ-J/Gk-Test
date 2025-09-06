@@ -123,19 +123,18 @@ setTimeout(()=>{
     for(let i=0;i<currentSet.length;i++){
          [...document.querySelectorAll(`.question-${currentSet[i].id}-choice`)].forEach(el=>el.setAttribute("disabled",true)) 
         let correctAnswer =  document.getElementById(`question-${currentSet[i].id}-choice-${cleanStr(currentSet[i].correctAnswer)}`)
-        correctAnswer.style.backgroundColor="green";
-        correctAnswer.style.color="white";
+        correctAnswer.style.backgroundColor="#00FA9A";
         document.getElementById(`dot-${currentSet[i].id}`).classList.remove("answered")
       if(currentSet[i].correctAnswer===currentSet[i].userAnswer){
        score++;
-       document.getElementById(`dot-${currentSet[i].id}`).style.backgroundColor="green";
+       document.getElementById(`dot-${currentSet[i].id}`).style.backgroundColor="#00FA9A";
       }
       else{
-    document.getElementById(`question-${currentSet[i].id}-choice-${cleanStr(currentSet[i].userAnswer)}`).style.backgroundColor="red";
-    document.getElementById(`dot-${currentSet[i].id}`).style.backgroundColor="red";
+    document.getElementById(`question-${currentSet[i].id}-choice-${cleanStr(currentSet[i].userAnswer)}`).style.backgroundColor="#FF0800";
+    document.getElementById(`dot-${currentSet[i].id}`).style.backgroundColor="#FF0800";
       }
     }
-    backTo.style.display="block"
+    backTo.style.display="flex"
     document.getElementById("dialog-outer").style.display="flex";
 setTimeout(()=>{
   results.style.scale="1";
